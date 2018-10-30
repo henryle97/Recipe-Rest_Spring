@@ -25,12 +25,17 @@ public class RecipeDAOImpl implements RecipeDAO{
 		Session session = sessionFactory.getCurrentSession();
 		Recipe recipe = null;
 		try {
+			// JOIN FETCH : fetch all associated entities  need : only one table
+			// Tìm cách fetch multi tables không sử dụng fetchtype.EAGER
 			Query<Recipe> theQuery = session.createQuery("select i from Recipe i "
 					+ "JOIN FETCH i.quantities "
+//					+ "JOIN FETCH i.recipeSteps "
 					+ "where i.id = :recipeID", Recipe.class);
+			
 			theQuery.setParameter("recipeID", id);
 		
 			 recipe = theQuery.getSingleResult();		// nếu không tìm thấy trả về ngoại lệ 
+			 
 		} catch (NoResultException ex) {
 			return null;
 		}

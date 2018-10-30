@@ -43,13 +43,20 @@ public class Recipe {
 	private FoodCategory foodCategory;
 	
 	// table quantity references den table recipe
-	@JsonManagedReference			// child is @JsonBackReference ngan chan loop
+	@JsonManagedReference			// parent:  child is @JsonBackReference ngan chan loop
 	@OneToMany(mappedBy="recipe",
 			fetch=FetchType.LAZY,				// EARGER : find all object relatition  | LAZY : get entity đầu tiên 
-			cascade= { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+			cascade = CascadeType.ALL)			// Anh huong lan nhau : xoa table nay se xoa table kia 
 	private List<Quantity> quantities;
 	
-	// convenient method for add quantity (BAT BUOC neu muon thiet lap quan he) : Dành cho insert data 
+	@JsonManagedReference
+	@OneToMany(mappedBy="recipe",
+			fetch=FetchType.EAGER,
+			cascade= CascadeType.ALL)
+	private List<RecipeStep> recipeSteps;
+	
+	// convenient method for add quantity 
+	// (BAT BUOC neu muon thiet lap quan he 2 chieu) : Dành cho insert data 
 	public void add(Quantity quantity) {
 		if (quantities == null) {
 			quantities = new ArrayList<Quantity>();
@@ -57,6 +64,16 @@ public class Recipe {
 		//setting up relation
 		quantity.setRecipe(this);
 		quantities.add(quantity);
+	}
+	
+	public void add(RecipeStep recipeStep) {
+		if(recipeSteps == null) {
+			recipeSteps = new ArrayList<RecipeStep>();
+		}
+		
+		// setting up relation
+		recipeSteps.add(recipeStep);
+		recipeStep.setRecipe(this);
 	}
 
 	public Recipe() {}
@@ -111,9 +128,15 @@ public class Recipe {
 	public void setQuantities(List<Quantity> quantities) {
 		this.quantities = quantities;
 	}
-	
-	
-	
-	
+
+	public List<RecipeStep> getRecipeSteps() {
+		return recipeSteps;
+	}
+
+	public void setRecipeSteps(List<RecipeStep> recipeSteps) {
+		this.recipeSteps = recipeSteps;
+	}
+
+
 	
 }

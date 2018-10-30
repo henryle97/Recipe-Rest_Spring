@@ -18,6 +18,8 @@ public class RecipeDetail {
 
 	private List<String> fullIngredients;
 	
+	private List<String> steps;
+	
 	public RecipeDetail() {}
 	
 	public RecipeDetail(Recipe recipe) {
@@ -27,10 +29,15 @@ public class RecipeDetail {
 		this.service = recipe.getService();
 		this.cookTime = recipe.getCookTime();
 		this.foodCategory = recipe.getFoodCategory().getName();
-		fullIngredients = new ArrayList<String>();
+		this.fullIngredients = new ArrayList<String>();
+		this.steps = new ArrayList<String>();
 		
 		for (Quantity quantity : recipe.getQuantities()) {
 			fullIngredients.add(createFullIngredient(quantity));
+		}
+		
+		for(RecipeStep step: recipe.getRecipeSteps()) {
+			steps.add(step.getDescription());
 		}
 	}
 
@@ -105,6 +112,14 @@ public class RecipeDetail {
 
 	public void setFullIngredients(List<String> fullIngredients) {
 		this.fullIngredients = fullIngredients;
+	}
+
+	public List<String> getSteps() {
+		return steps;
+	}
+
+	public void setSteps(List<String> steps) {
+		this.steps = steps;
 	}
 
 	

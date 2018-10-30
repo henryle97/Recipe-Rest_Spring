@@ -28,7 +28,7 @@ public class RecipeForSearch {
 		this.imgUrl = imgUrl;
 	}
 	
-	// Note: getter/setter cho jackson convert to JSON 
+	// Note: getter/setter for jackson convert to JSON 
 	public int getId() {
 		return id;
 	}

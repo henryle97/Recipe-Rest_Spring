@@ -1,0 +1,5 @@
+0:0:0:0:0:0:0:1 - - [30/Oct/2018:15:50:07 +0700] GET / HTTP/1.1 404 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [30/Oct/2018:15:50:22 +0700] GET /recipe-rest-pj1/api/search?q=%E1%BB%A9c%20g%C3%A0 HTTP/1.1 404 99 http-bio-8080-exec-2 3183
+0:0:0:0:0:0:0:1 - - [30/Oct/2018:15:50:30 +0700] GET /recipe-rest-pj1/api/search?q= HTTP/1.1 200 705 http-bio-8080-exec-3 884
+0:0:0:0:0:0:0:1 - - [30/Oct/2018:15:50:33 +0700] GET /recipe-rest-pj1/api/search?q= HTTP/1.1 200 705 http-bio-8080-exec-4 25
+0:0:0:0:0:0:0:1 - - [30/Oct/2018:15:53:14 +0700] GET /recipe-rest-pj1/api/recipe?id=1 HTTP/1.1 200 1403 http-bio-8080-exec-6 1582

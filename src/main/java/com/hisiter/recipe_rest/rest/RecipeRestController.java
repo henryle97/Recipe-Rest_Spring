@@ -2,29 +2,31 @@ package com.hisiter.recipe_rest.rest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hisiter.recipe_rest.entity.Quantity;
 import com.hisiter.recipe_rest.entity.Recipe;
 import com.hisiter.recipe_rest.entity.RecipeDetail;
 import com.hisiter.recipe_rest.entity.RecipeForSearch;
 import com.hisiter.recipe_rest.service.RecipeService;
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8081")
 public class RecipeRestController {
 	@Autowired
 	RecipeService recipeService;
 	
+	
 	@GetMapping("/search")		// /search?q=...
-	public List<RecipeForSearch> searchRecipe(@RequestParam(name="q") String theSearchInput){
+	public Map<String, Object> searchRecipe(@RequestParam(name="q") String theSearchInput){
 		
 		// Decode URL to unicode
 		try {
@@ -38,8 +40,10 @@ public class RecipeRestController {
 		if (recipes.size() == 0) {
 			throw new RecipeNotFoundException("Không tìm thấy kết quả nào");		// sẽ được xử lý bởi RecipeRestExceptionHandle
 		}
-		
-		return recipes;
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", recipes.size());
+		result.put("recipes", recipes);
+		return result;
 		
 	}
 	
